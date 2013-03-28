@@ -1,4 +1,6 @@
 package org.jenkinsci.plugins.readme;
+import java.util.logging.Logger;
+
 import hudson.Extension;
 import hudson.model.*;
 
@@ -14,6 +16,7 @@ import hudson.model.*;
 @Extension
 public class ReadMeRootAction implements RootAction, Describable<ReadMeRootAction> {
 
+	private static final Logger logger = Logger.getLogger("ReadMeRootAction");
 	/*
 	 * index.jelly將會透過此method取得Jenkins的PrimaryView。
 	 */
@@ -78,6 +81,9 @@ public class ReadMeRootAction implements RootAction, Describable<ReadMeRootActio
         	// "readMeUrl"則為global.jelly中所對應的data field
             readMeUrl = formData.getString("readMeUrl");
             save();
+            
+            String current_user = (User.current()) != null? User.current().getId() : "somebody";
+            logger.info(current_user+" configure new readme url to "+readMeUrl);
             return super.configure(req, formData);
         }
         
@@ -94,7 +100,7 @@ public class ReadMeRootAction implements RootAction, Describable<ReadMeRootActio
          * get方法，index.jelly夠過getReadMeUrl取得readMeUrl變數。
          */
         public String getReadMeUrl() {
-            return readMeUrl;
+        	 return readMeUrl;
         }
 
     }

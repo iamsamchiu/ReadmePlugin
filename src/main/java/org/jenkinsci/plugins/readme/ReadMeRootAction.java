@@ -71,6 +71,8 @@ public class ReadMeRootAction implements RootAction, Describable<ReadMeRootActio
         public ReadMeDescriptor() {
         	// 在class的建構子呼叫load()可以從硬碟讀取之前透過save()的資料
             load();
+            logger.info("load readme url:"+readMeURL);
+
         }
 
         @Override
